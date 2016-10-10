@@ -4,7 +4,7 @@
     Navigation
    ------------------------------------------------- */
 
-.datepicker--nav {
+.datepicker__nav {
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid map_get($datepickerBorderColor, nav);
@@ -16,15 +16,15 @@
   }
 }
 
-.datepicker--nav-title,
-.datepicker--nav-action {
+.datepicker__nav-title,
+.datepicker__nav-action {
   display: flex;
   cursor: pointer;
   align-items: center;
   justify-content: center;
 }
 
-.datepicker--nav-action {
+.datepicker__nav-action {
   width: $datepickerDayCellSize;
   border-radius: $datepickerBorderRadius;
   user-select: none;
@@ -33,7 +33,7 @@
     background: map_get($datepickerBG, hover);
   }
 
-  &.-disabled- {
+  &._disabled {
     visibility: hidden;
   }
 
@@ -49,7 +49,7 @@
   }
 }
 
-.datepicker--nav-title {
+.datepicker__nav-title {
   border-radius: $datepickerBorderRadius;
   padding: 0 8px;
 
@@ -63,7 +63,7 @@
     background: map_get($datepickerBG, hover);
   }
 
-  &.-disabled- {
+  &._disabled {
     cursor: default;
     background: none;
   }
@@ -72,13 +72,13 @@
 //  Buttons
 // -------------------------------------------------
 
-.datepicker--buttons {
+.datepicker__buttons {
   display: flex;
   padding: $datepickerPadding;
   border-top: 1px solid map_get($datepickerBorderColor, nav);
 }
 
-.datepicker--button {
+.datepicker__button {
   color: map_get($datepickerTextColor, currentDate);
   cursor: pointer;
   border-radius: $datepickerBorderRadius;

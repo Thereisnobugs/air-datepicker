@@ -57,7 +57,7 @@ $rangeThumbBg: #dedede;
   background: transparent;
 }
 
-.datepicker--time {
+.datepicker__time {
   border-top: 1px solid map_get($datepickerBorderColor, nav);
   display: flex;
   align-items: center;
@@ -66,7 +66,7 @@ $rangeThumbBg: #dedede;
   position: relative;
 
   &.-am-pm- {
-    .datepicker--time-sliders {
+    .datepicker__time-sliders {
       flex: 0 1 138px;
       max-width: 138px;
     }
@@ -77,18 +77,18 @@ $rangeThumbBg: #dedede;
   }
 }
 
-.datepicker--time-sliders {
+.datepicker__time-sliders {
   flex: 0 1 153px;
   margin-right: 10px;
   max-width: 153px;
 }
 
-.datepicker--time-label {
+.datepicker__time-label {
   display: none;
   font-size: 12px;
 }
 
-.datepicker--time-current {
+.datepicker__time-current {
   display: flex;
   align-items: center;
   flex: 1;
@@ -97,13 +97,13 @@ $rangeThumbBg: #dedede;
   margin: 0 0 0 10px;
 }
 
-.datepicker--time-current-colon {
+.datepicker__time-current-colon {
   margin: 0 2px 3px;
   line-height: 1;
 }
 
-.datepicker--time-current-hours,
-.datepicker--time-current-minutes {
+.datepicker__time-current-hours,
+.datepicker__time-current-minutes {
   line-height: 1;
   font-size: 19px;
   font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
@@ -123,14 +123,14 @@ $rangeThumbBg: #dedede;
     opacity: 0;
   }
 
-  &.-focus- {
+  &._focus {
     &:after {
       opacity: 1;
     }
   }
 }
 
-.datepicker--time-current-ampm {
+.datepicker__time-current-ampm {
   text-transform: uppercase;
   align-self: flex-end;
   color: map_get($datepickerTextColor, navArrows);
@@ -139,7 +139,7 @@ $rangeThumbBg: #dedede;
   margin-bottom: 1px;
 }
 
-.datepicker--time-row {
+.datepicker__time-row {
   display: flex;
   align-items: center;
   font-size: 11px;
@@ -217,7 +217,7 @@ $rangeThumbBg: #dedede;
   }
 }
 
-.datepicker--time-icon {
+.datepicker__time-icon {
   color: map_get($datepickerTextColor, navArrows);
   border: 1px solid;
   border-radius: 50%;

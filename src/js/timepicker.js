@@ -1,15 +1,15 @@
 ;(function () {
-    var template = '<div class="datepicker--time">' +
-        '<div class="datepicker--time-current">' +
-        '   <span class="datepicker--time-current-hours">#{hourVisible}</span>' +
-        '   <span class="datepicker--time-current-colon">:</span>' +
-        '   <span class="datepicker--time-current-minutes">#{minValue}</span>' +
+    var template = '<div class="datepicker__time">' +
+        '<div class="datepicker__time-current">' +
+        '   <span class="datepicker__time-current-hours">#{hourVisible}</span>' +
+        '   <span class="datepicker__time-current-colon">:</span>' +
+        '   <span class="datepicker__time-current-minutes">#{minValue}</span>' +
         '</div>' +
-        '<div class="datepicker--time-sliders">' +
-        '   <div class="datepicker--time-row">' +
+        '<div class="datepicker__time-sliders">' +
+        '   <div class="datepicker__time-row">' +
         '      <input type="range" name="hours" value="#{hourValue}" min="#{hourMin}" max="#{hourMax}" step="#{hourStep}"/>' +
         '   </div>' +
-        '   <div class="datepicker--time-row">' +
+        '   <div class="datepicker__time-row">' +
         '      <input type="range" name="minutes" value="#{minValue}" min="#{minMin}" max="#{minMax}" step="#{minStep}"/>' +
         '   </div>' +
         '</div>' +
@@ -128,12 +128,12 @@
             this.$ranges = $('[type="range"]', this.$timepicker);
             this.$hours = $('[name="hours"]', this.$timepicker);
             this.$minutes = $('[name="minutes"]', this.$timepicker);
-            this.$hoursText = $('.datepicker--time-current-hours', this.$timepicker);
-            this.$minutesText = $('.datepicker--time-current-minutes', this.$timepicker);
+            this.$hoursText = $('.datepicker__time-current-hours', this.$timepicker);
+            this.$minutesText = $('.datepicker__time-current-minutes', this.$timepicker);
 
             if (this.d.ampm) {
-                this.$ampm = $('<span class="datepicker--time-current-ampm">')
-                    .appendTo($('.datepicker--time-current', this.$timepicker))
+                this.$ampm = $('<span class="datepicker__time-current-ampm">')
+                    .appendTo($('.datepicker__time-current', this.$timepicker))
                     .html(this.dayPeriod);
 
                 this.$timepicker.addClass('-am-pm-');
@@ -267,13 +267,13 @@
 
         _onMouseEnterRange: function (e) {
             var name = $(e.target).attr('name');
-            $('.datepicker--time-current-' + name, this.$timepicker).addClass('-focus-');
+            $('.datepicker__time-current-' + name, this.$timepicker).addClass('_focus');
         },
 
         _onMouseOutRange: function (e) {
             var name = $(e.target).attr('name');
             if (this.d.inFocus) return; // Prevent removing focus when mouse out of range slider
-            $('.datepicker--time-current-' + name, this.$timepicker).removeClass('-focus-');
+            $('.datepicker__time-current-' + name, this.$timepicker).removeClass('_focus');
         },
 
         _onMouseUpRange: function (e) {

@@ -53,16 +53,16 @@ $datepickerTransitionOffset: 8px !default;
     color: darken(map_get($datepickerTextColor, otherMonth), 10);
   }
 
-  &.-disabled- {
-    &.-focus- {
+  &._disabled {
+    &._focus {
       color: map_get($datepickerTextColor, otherMonth);
     }
   }
 
-  &.-selected- {
+  &._selected {
     color: #fff;
     background: lighten(map_get($datepickerBG, selected), 15);
-    &.-focus- {
+    &._focus {
       background: lighten(map_get($datepickerBG, selected), 10);
     }
   }
@@ -71,7 +71,7 @@ $datepickerTransitionOffset: 8px !default;
     background-color: map_get($datepickerBG, inRange);
     color: darken(map_get($datepickerTextColor, otherMonth), 7);
 
-    &.-focus- {
+    &._focus {
       background-color: rgba(map_get($datepickerBG, inRange), .2);
     }
   }

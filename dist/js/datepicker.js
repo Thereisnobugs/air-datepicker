@@ -6,9 +6,9 @@
         containerBuilt = false,
         baseTemplate = '' +
             '<div class="datepicker">' +
-            '<i class="datepicker--pointer"></i>' +
-            '<nav class="datepicker--nav"></nav>' +
-            '<div class="datepicker--content"></div>' +
+            '<i class="datepicker__pointer"></i>' +
+            '<nav class="datepicker__nav"></nav>' +
+            '<div class="datepicker__content"></div>' +
             '</div>',
         defaults = {
             classes: '',
@@ -53,8 +53,8 @@
 
             // navigation
             monthsField: 'monthsShort',
-            prevHtml: '<svg><path d="M 17,12 l -5,5 l 5,5"></path></svg>',
-            nextHtml: '<svg><path d="M 14,12 l 5,5 l -5,5"></path></svg>',
+            prevHtml: '',
+            nextHtml: '',
             navTitles: {
                 days: 'MM, <i>yyyy</i>',
                 months: 'yyyy',
@@ -185,8 +185,8 @@
             this.view = this.currentView;
 
             this.$el.on('clickCell.adp', this._onClickCell.bind(this));
-            this.$datepicker.on('mouseenter', '.datepicker--cell', this._onMouseEnterCell.bind(this));
-            this.$datepicker.on('mouseleave', '.datepicker--cell', this._onMouseLeaveCell.bind(this));
+            this.$datepicker.on('mouseenter', '.datepicker__cell', this._onMouseEnterCell.bind(this));
+            this.$datepicker.on('mouseleave', '.datepicker__cell', this._onMouseLeaveCell.bind(this));
 
             this.inited = true;
         },
@@ -281,8 +281,8 @@
             }
 
             this.$datepicker = $(baseTemplate).appendTo($appendTarget);
-            this.$content = $('.datepicker--content', this.$datepicker);
-            this.$nav = $('.datepicker--nav', this.$datepicker);
+            this.$content = $('.datepicker__content', this.$datepicker);
+            this.$nav = $('.datepicker__nav', this.$datepicker);
         },
 
         _triggerOnChange: function () {
@@ -745,9 +745,9 @@
             pos = pos.split(' ');
             var main = pos[0],
                 sec = pos[1],
-                classes = 'datepicker -' + main + '-' + sec + '- -from-' + main + '-';
+                classes = 'datepicker _' + main + '-' + sec + ' _from-' + main;
 
-            if (this.visible) classes += ' active';
+            if (this.visible) classes += ' _active';
 
             this.$datepicker
                 .removeAttr('class')
@@ -812,7 +812,7 @@
             var onShow = this.opts.onShow;
 
             this.setPosition(this.opts.position);
-            this.$datepicker.addClass('active');
+            this.$datepicker.addClass('_active');
             this.visible = true;
 
             if (onShow) {
@@ -824,7 +824,7 @@
             var onHide = this.opts.onHide;
 
             this.$datepicker
-                .removeClass('active')
+                .removeClass('_active')
                 .css({
                     left: '-100000px'
                 });
@@ -1055,7 +1055,7 @@
             type = type || this.cellType;
 
             var d = datepicker.getParsedDate(date),
-                selector = '.datepicker--cell[data-year="' + d.year + '"]',
+                selector = '.datepicker__cell[data-year="' + d.year + '"]',
                 $cell;
 
             switch (type) {
@@ -1177,7 +1177,7 @@
             // Enter
             if (code == 13) {
                 if (this.focused) {
-                    if (this._getCell(this.focused).hasClass('-disabled-')) return;
+                    if (this._getCell(this.focused).hasClass('_disabled')) return;
                     if (this.view != this.opts.minView) {
                         this.down()
                     } else {
@@ -1212,7 +1212,7 @@
         },
 
         _onMouseEnterCell: function (e) {
-            var $cell = $(e.target).closest('.datepicker--cell'),
+            var $cell = $(e.target).closest('.datepicker__cell'),
                 date = this._getDateFromCell($cell);
 
             // Prevent from unnecessary rendering and setting new currentDate
@@ -1222,7 +1222,7 @@
                 this.focused = ''
             }
 
-            $cell.addClass('-focus-');
+            $cell.addClass('_focus');
 
             this.focused = date;
             this.silent = false;
@@ -1239,9 +1239,9 @@
         },
 
         _onMouseLeaveCell: function (e) {
-            var $cell = $(e.target).closest('.datepicker--cell');
+            var $cell = $(e.target).closest('.datepicker__cell');
 
-            $cell.removeClass('-focus-');
+            $cell.removeClass('_focus');
 
             this.silent = true;
             this.focused = '';
@@ -1261,7 +1261,7 @@
             date.setHours(h);
             date.setMinutes(m);
 
-            if (!selected && !this._getCell(date).hasClass('-disabled-')) {
+            if (!selected && !this._getCell(date).hasClass('_disabled')) {
                 this.selectDate(date);
             } else {
                 this._setInputValue();
@@ -1284,7 +1284,7 @@
                 var $cell = this._getCell(this.focused);
 
                 if ($cell.length) {
-                    $cell.removeClass('-focus-')
+                    $cell.removeClass('_focus')
                 }
             }
             this._focused = val;
@@ -1413,6 +1413,8 @@
             if (data[match] || data[match] === 0) {
                 return data[match]
             }
+
+            return '';
         });
     };
 
@@ -1495,17 +1497,17 @@
 ;(function () {
     var templates = {
         days:'' +
-        '<div class="datepicker--days datepicker--body">' +
-        '<div class="datepicker--days-names"></div>' +
-        '<div class="datepicker--cells datepicker--cells-days"></div>' +
+        '<div class="datepicker__days datepicker__body">' +
+        '<div class="datepicker__days-names"></div>' +
+        '<div class="datepicker__cells datepicker__cells_days"></div>' +
         '</div>',
         months: '' +
-        '<div class="datepicker--months datepicker--body">' +
-        '<div class="datepicker--cells datepicker--cells-months"></div>' +
+        '<div class="datepicker__months datepicker__body">' +
+        '<div class="datepicker__cells datepicker__cells_months"></div>' +
         '</div>',
         years: '' +
-        '<div class="datepicker--years datepicker--body">' +
-        '<div class="datepicker--cells datepicker--cells-years"></div>' +
+        '<div class="datepicker__years datepicker__body">' +
+        '<div class="datepicker__cells datepicker__cells_years"></div>' +
         '</div>'
         },
         datepicker = $.fn.datepicker,
@@ -1530,13 +1532,13 @@
         },
 
         _bindEvents: function () {
-            this.$el.on('click', '.datepicker--cell', $.proxy(this._onClickCell, this));
+            this.$el.on('click', '.datepicker__cell', $.proxy(this._onClickCell, this));
         },
 
         _buildBaseHtml: function () {
             this.$el = $(templates[this.type]).appendTo(this.d.$content);
-            this.$names = $('.datepicker--days-names', this.$el);
-            this.$cells = $('.datepicker--cells', this.$el);
+            this.$names = $('.datepicker__days-names', this.$el);
+            this.$cells = $('.datepicker__cells', this.$el);
         },
 
         _getDayNamesHtml: function (firstDay, curDay, html, i) {
@@ -1547,13 +1549,13 @@
             if (i > 7) return html;
             if (curDay == 7) return this._getDayNamesHtml(firstDay, 0, html, ++i);
 
-            html += '<div class="datepicker--day-name' + (this.d.isWeekend(curDay) ? " -weekend-" : "") + '">' + this.d.loc.daysMin[curDay] + '</div>';
+            html += '<div class="datepicker__day-name' + (this.d.isWeekend(curDay) ? " _weekend" : "") + '">' + this.d.loc.daysMin[curDay] + '</div>';
 
             return this._getDayNamesHtml(firstDay, ++curDay, html, ++i);
         },
 
         _getCellContents: function (date, type) {
-            var classes = "datepicker--cell datepicker--cell-" + type,
+            var classes = "datepicker__cell datepicker__cell_" + type,
                 currentDate = new Date(),
                 parent = this.d,
                 minRange = dp.resetTime(parent.minRange),
@@ -1565,11 +1567,11 @@
 
             switch (type) {
                 case 'day':
-                    if (parent.isWeekend(d.day)) classes += " -weekend-";
+                    if (parent.isWeekend(d.day)) classes += " _weekend";
                     if (d.month != this.d.parsedDate.month) {
-                        classes += " -other-month-";
+                        classes += " _other-month";
                         if (!opts.selectOtherMonths) {
-                            classes += " -disabled-";
+                            classes += " _disabled";
                         }
                         if (!opts.showOtherMonths) html = '';
                     }
@@ -1583,7 +1585,7 @@
                     if (d.year < decade[0] || d.year > decade[1]) {
                         classes += ' -other-decade-';
                         if (!opts.selectOtherYears) {
-                            classes += " -disabled-";
+                            classes += " _disabled";
                         }
                         if (!opts.showOtherYears) html = '';
                     }
@@ -1623,10 +1625,10 @@
             }
 
 
-            if (dp.isSame(currentDate, date, type)) classes += ' -current-';
-            if (parent.focused && dp.isSame(date, parent.focused, type)) classes += ' -focus-';
-            if (parent._isSelected(date, type)) classes += ' -selected-';
-            if (!parent._isInRange(date, type) || render.disabled) classes += ' -disabled-';
+            if (dp.isSame(currentDate, date, type)) classes += ' _current';
+            if (parent.focused && dp.isSame(date, parent.focused, type)) classes += ' _focus';
+            if (parent._isSelected(date, type)) classes += ' _selected';
+            if (!parent._isInRange(date, type) || render.disabled) classes += ' _disabled';
 
             return {
                 html: html,
@@ -1744,7 +1746,7 @@
         },
 
         _update: function () {
-            var $cells = $('.datepicker--cell', this.$cells),
+            var $cells = $('.datepicker__cell', this.$cells),
                 _this = this,
                 classes,
                 $cell,
@@ -1759,12 +1761,12 @@
 
         show: function () {
             if (this.opts.onlyTimepicker) return;
-            this.$el.addClass('active');
+            this.$el.addClass('_active');
             this.acitve = true;
         },
 
         hide: function () {
-            this.$el.removeClass('active');
+            this.$el.removeClass('_active');
             this.active = false;
         },
 
@@ -1795,9 +1797,9 @@
         },
 
         _onClickCell: function (e) {
-            var $el = $(e.target).closest('.datepicker--cell');
+            var $el = $(e.target).closest('.datepicker__cell');
 
-            if ($el.hasClass('-disabled-')) return;
+            if ($el.hasClass('_disabled')) return;
 
             this._handleClick.bind(this)($el);
         }
@@ -1806,11 +1808,11 @@
 
 ;(function () {
     var template = '' +
-        '<div class="datepicker--nav-action" data-action="prev">#{prevHtml}</div>' +
-        '<div class="datepicker--nav-title">#{title}</div>' +
-        '<div class="datepicker--nav-action" data-action="next">#{nextHtml}</div>',
-        buttonsContainerTemplate = '<div class="datepicker--buttons"></div>',
-        button = '<span class="datepicker--button" data-action="#{action}">#{label}</span>',
+        '<div class="datepicker__nav-action datepicker__nav-action_prev" data-action="prev">#{prevHtml}</div>' +
+        '<div class="datepicker__nav-title">#{title}</div>' +
+        '<div class="datepicker__nav-action datepicker__nav-action_next" data-action="next">#{nextHtml}</div>',
+        buttonsContainerTemplate = '<div class="datepicker__buttons"></div>',
+        button = '<span class="datepicker__button" data-action="#{action}">#{label}</span>',
         datepicker = $.fn.datepicker,
         dp = datepicker.Constructor;
 
@@ -1830,9 +1832,9 @@
         },
 
         _bindEvents: function () {
-            this.d.$nav.on('click', '.datepicker--nav-action', $.proxy(this._onClickNavButton, this));
-            this.d.$nav.on('click', '.datepicker--nav-title', $.proxy(this._onClickNavTitle, this));
-            this.d.$datepicker.on('click', '.datepicker--button', $.proxy(this._onClickNavButton, this));
+            this.d.$nav.on('click', '.datepicker__nav-action', $.proxy(this._onClickNavButton, this));
+            this.d.$nav.on('click', '.datepicker__nav-title', $.proxy(this._onClickNavTitle, this));
+            this.d.$datepicker.on('click', '.datepicker__button', $.proxy(this._onClickNavButton, this));
         },
 
         _buildBaseHtml: function () {
@@ -1856,7 +1858,7 @@
                 html = dp.template(template, $.extend({title: title}, this.opts));
             this.d.$nav.html(html);
             if (this.d.view == 'years') {
-                $('.datepicker--nav-title', this.d.$nav).addClass('-disabled-');
+                $('.datepicker__nav-title', this.d.$nav).addClass('_disabled');
             }
             this.setNavStatus();
         },
@@ -1882,7 +1884,7 @@
 
         _addButtonsContainer: function () {
             this.d.$datepicker.append(buttonsContainerTemplate);
-            this.$buttonsContainer = $('.datepicker--buttons', this.d.$datepicker);
+            this.$buttonsContainer = $('.datepicker__buttons', this.d.$datepicker);
         },
 
         setNavStatus: function () {
@@ -1923,11 +1925,11 @@
         },
 
         _disableNav: function (nav) {
-            $('[data-action="' + nav + '"]', this.d.$nav).addClass('-disabled-')
+            $('[data-action="' + nav + '"]', this.d.$nav).addClass('_disabled')
         },
 
         _activateNav: function (nav) {
-            $('[data-action="' + nav + '"]', this.d.$nav).removeClass('-disabled-')
+            $('[data-action="' + nav + '"]', this.d.$nav).removeClass('_disabled')
         },
 
         _onClickNavButton: function (e) {
@@ -1938,7 +1940,7 @@
         },
 
         _onClickNavTitle: function (e) {
-            if ($(e.target).hasClass('-disabled-')) return;
+            if ($(e.target).hasClass('_disabled')) return;
 
             if (this.d.view == 'days') {
                 return this.d.view = 'months'
@@ -1951,17 +1953,17 @@
 })();
 
 ;(function () {
-    var template = '<div class="datepicker--time">' +
-        '<div class="datepicker--time-current">' +
-        '   <span class="datepicker--time-current-hours">#{hourVisible}</span>' +
-        '   <span class="datepicker--time-current-colon">:</span>' +
-        '   <span class="datepicker--time-current-minutes">#{minValue}</span>' +
+    var template = '<div class="datepicker__time">' +
+        '<div class="datepicker__time-current">' +
+        '   <span class="datepicker__time-current-hours">#{hourVisible}</span>' +
+        '   <span class="datepicker__time-current-colon">:</span>' +
+        '   <span class="datepicker__time-current-minutes">#{minValue}</span>' +
         '</div>' +
-        '<div class="datepicker--time-sliders">' +
-        '   <div class="datepicker--time-row">' +
+        '<div class="datepicker__time-sliders">' +
+        '   <div class="datepicker__time-row">' +
         '      <input type="range" name="hours" value="#{hourValue}" min="#{hourMin}" max="#{hourMax}" step="#{hourStep}"/>' +
         '   </div>' +
-        '   <div class="datepicker--time-row">' +
+        '   <div class="datepicker__time-row">' +
         '      <input type="range" name="minutes" value="#{minValue}" min="#{minMin}" max="#{minMax}" step="#{minStep}"/>' +
         '   </div>' +
         '</div>' +
@@ -2080,12 +2082,12 @@
             this.$ranges = $('[type="range"]', this.$timepicker);
             this.$hours = $('[name="hours"]', this.$timepicker);
             this.$minutes = $('[name="minutes"]', this.$timepicker);
-            this.$hoursText = $('.datepicker--time-current-hours', this.$timepicker);
-            this.$minutesText = $('.datepicker--time-current-minutes', this.$timepicker);
+            this.$hoursText = $('.datepicker__time-current-hours', this.$timepicker);
+            this.$minutesText = $('.datepicker__time-current-minutes', this.$timepicker);
 
             if (this.d.ampm) {
-                this.$ampm = $('<span class="datepicker--time-current-ampm">')
-                    .appendTo($('.datepicker--time-current', this.$timepicker))
+                this.$ampm = $('<span class="datepicker__time-current-ampm">')
+                    .appendTo($('.datepicker__time-current', this.$timepicker))
                     .html(this.dayPeriod);
 
                 this.$timepicker.addClass('-am-pm-');
@@ -2219,13 +2221,13 @@
 
         _onMouseEnterRange: function (e) {
             var name = $(e.target).attr('name');
-            $('.datepicker--time-current-' + name, this.$timepicker).addClass('-focus-');
+            $('.datepicker__time-current-' + name, this.$timepicker).addClass('_focus');
         },
 
         _onMouseOutRange: function (e) {
             var name = $(e.target).attr('name');
             if (this.d.inFocus) return; // Prevent removing focus when mouse out of range slider
-            $('.datepicker--time-current-' + name, this.$timepicker).removeClass('-focus-');
+            $('.datepicker__time-current-' + name, this.$timepicker).removeClass('_focus');
         },
 
         _onMouseUpRange: function (e) {

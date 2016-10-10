@@ -4,12 +4,12 @@
     Datepicker cells
    ------------------------------------------------- */
 
-.datepicker--cells {
+.datepicker__cells {
   display: flex;
   flex-wrap: wrap;
 }
 
-.datepicker--cell {
+.datepicker__cell {
   border-radius: $datepickerBorderRadius;
   box-sizing: border-box;
   cursor: pointer;
@@ -20,14 +20,14 @@
   height: $datepickerDayCellSize;
   z-index: 1;
 
-  &.-focus- {
+  &._focus {
     background: map_get($datepickerBG, hover);
   }
 
-  &.-current- {
+  &._current {
     color: map_get($datepickerTextColor, currentDate);
 
-    &.-focus- {
+    &._focus {
       color: map_get($datepickerTextColor, common);
     }
 
@@ -41,16 +41,16 @@
     color: map_get($datepickerTextColor, common);
     border-radius: 0;
 
-    &.-focus- {
+    &._focus {
       background-color: rgba(map_get($datepickerBG, inRange), .2);
     }
   }
 
-  &.-disabled- {
+  &._disabled {
     cursor: default;
     color: map_get($datepickerTextColor, disabled);
 
-    &.-focus- {
+    &._focus {
       color: map_get($datepickerTextColor, disabled);
     }
 
@@ -58,8 +58,8 @@
       color: darken(map_get($datepickerTextColor, disabled), 5);
     }
 
-    &.-current- {
-      &.-focus- {
+    &._current {
+      &._focus {
         color: map_get($datepickerTextColor, disabled);
       }
     }
@@ -81,17 +81,17 @@
 
   }
 
-  &.-selected- {
+  &._selected {
     color: #fff;
     border: none;
     background: map_get($datepickerBG, selected);
 
-    &.-current- {
+    &._current {
       color: #fff;
       background: map_get($datepickerBG, selected);
     }
 
-    &.-focus- {
+    &._focus {
       background: map_get($datepickerBG, selectedHover);
     }
   }
@@ -104,13 +104,13 @@
 //  Day names
 // -------------------------------------------------
 
-.datepicker--days-names {
+.datepicker__days-names {
   display: flex;
   flex-wrap: wrap;
   margin: 8px 0 3px;
 }
 
-.datepicker--day-name {
+.datepicker__day-name {
   color: map_get($datepickerTextColor, dayNames);
   display: flex;
   align-items: center;
@@ -124,10 +124,10 @@
 //  Day cell
 // -------------------------------------------------
 
-.datepicker--cell-day {
+.datepicker__cell_day {
   width: (100/7)#{'%'};
 
-  &.-other-month- {
+  &._other-month {
     @extend %otherMonth;
   }
 }
@@ -136,16 +136,16 @@
 //  Months
 // -------------------------------------------------
 
-.datepicker--months {}
+.datepicker__months {}
 
-.datepicker--cells-months {
+.datepicker__cells_months {
   height: $datepickerMinBodyHeight;
 }
 
 //  Month cell
 // -------------------------
 
-.datepicker--cell-month {
+.datepicker__cell_month {
   width: 33.33%;
   height: 25%;
 }
@@ -153,17 +153,17 @@
 //  Years
 // -------------------------------------------------
 
-.datepicker--years {
+.datepicker__years {
   height: $datepickerMinBodyHeight;
 }
 
-.datepicker--cells-years {
+.datepicker__cells_years {
   height: $datepickerMinBodyHeight;
 }
 //  Year cell
 // -------------------------
 
-.datepicker--cell-year {
+.datepicker__cell_year {
   width: 100% / $datepickerYearsPerRow;
   height: 33.33%;
 

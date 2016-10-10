@@ -30,21 +30,21 @@
   transition: opacity $datepickerTransitionSpeed $datepickerTransitionEase, transform $datepickerTransitionSpeed $datepickerTransitionEase, left 0s $datepickerTransitionSpeed;
   z-index: $datepickerZIndex;
 
-  &.-from-top- {
+  &._from-top {
     transform: translateY(-$datepickerTransitionOffset);
   }
-  &.-from-right- {
+  &._from-right {
     transform: translateX($datepickerTransitionOffset);
   }
-  &.-from-bottom- {
+  &._from-bottom {
     transform: translateY($datepickerTransitionOffset);
   }
-  &.-from-left- {
+  &._from-left {
     transform: translateX(-$datepickerTransitionOffset);
   }
 
 
-  &.active {
+  &._active {
     opacity: 1;
     transform: translate(0);
     transition: opacity $datepickerTransitionSpeed $datepickerTransitionEase, transform $datepickerTransitionSpeed $datepickerTransitionEase, left 0s 0s;
@@ -62,12 +62,12 @@
     transform: none;
   }
 
-  .datepicker--pointer {
+  .datepicker__pointer {
     display: none;
   }
 }
 
-.datepicker--content {
+.datepicker__content {
   box-sizing: content-box;
   padding: $datepickerPadding;
 
@@ -80,7 +80,7 @@
 // -------------------------------------------------
 $pointerHalfSize: $datepickerPointerSize / 2 - 1;
 
-.datepicker--pointer {
+.datepicker__pointer {
   position: absolute;
   background: #fff;
   border-top: 1px solid map-get($datepickerBorderColor, default);
@@ -92,22 +92,22 @@ $pointerHalfSize: $datepickerPointerSize / 2 - 1;
   //  Main axis
   // -------------------------
 
-  .-top-left- &, .-top-center- &, .-top-right- & {
+  ._top-left &, ._top-center &, ._top-right & {
     top: calc(100% - #{$pointerHalfSize});
     transform: rotate(135deg);
   }
 
-  .-right-top- &, .-right-center- &, .-right-bottom- & {
+  ._right-top &, ._right-center &, ._right-bottom & {
     right: calc(100% - #{$pointerHalfSize});
     transform: rotate(225deg);
   }
 
-  .-bottom-left- &, .-bottom-center- &, .-bottom-right- & {
+  ._bottom-left &, ._bottom-center &, ._bottom-right & {
     bottom: calc(100% - #{$pointerHalfSize});
     transform: rotate(315deg);
   }
 
-  .-left-top- &, .-left-center- &, .-left-bottom- & {
+  ._left-top &, ._left-center &, ._left-bottom & {
     left: calc(100% - #{$pointerHalfSize});
     transform: rotate(45deg);
   }
@@ -115,23 +115,23 @@ $pointerHalfSize: $datepickerPointerSize / 2 - 1;
   //  Secondary axis
   // -------------------------
 
-  .-top-left- &, .-bottom-left- & {
+  ._top-left &, ._bottom-left & {
     left: $datepickerPointerOffset;
   }
-  .-top-right- &, .-bottom-right- & {
+  ._top-right &, ._bottom-right & {
     right: $datepickerPointerOffset;
   }
-  .-top-center- &, .-bottom-center- & {
+  ._top-center &, ._bottom-center & {
     left: calc(50% - #{$datepickerPointerSize} / 2);
   }
 
-  .-left-top- &, .-right-top- & {
+  ._left-top &, ._right-top & {
     top: $datepickerPointerOffset;
   }
-  .-left-bottom- &, .-right-bottom- & {
+  ._left-bottom &, ._right-bottom & {
     bottom: $datepickerPointerOffset;
   }
-  .-left-center- &, .-right-center- & {
+  ._left-center &, ._right-center & {
     top: calc(50% - #{$datepickerPointerSize} / 2);
   }
 
@@ -140,10 +140,10 @@ $pointerHalfSize: $datepickerPointerSize / 2 - 1;
 //  Body
 // -------------------------------------------------
 
-.datepicker--body {
+.datepicker__body {
   display: none;
 
-  &.active {
+  &._active {
     display: block;
   }
 }

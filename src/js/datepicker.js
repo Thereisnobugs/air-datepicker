@@ -6,9 +6,9 @@
         containerBuilt = false,
         baseTemplate = '' +
             '<div class="datepicker">' +
-            '<i class="datepicker--pointer"></i>' +
-            '<nav class="datepicker--nav"></nav>' +
-            '<div class="datepicker--content"></div>' +
+            '<i class="datepicker__pointer"></i>' +
+            '<nav class="datepicker__nav"></nav>' +
+            '<div class="datepicker__content"></div>' +
             '</div>',
         defaults = {
             classes: '',
@@ -53,8 +53,8 @@
 
             // navigation
             monthsField: 'monthsShort',
-            prevHtml: '<svg><path d="M 17,12 l -5,5 l 5,5"></path></svg>',
-            nextHtml: '<svg><path d="M 14,12 l 5,5 l -5,5"></path></svg>',
+            prevHtml: '',
+            nextHtml: '',
             navTitles: {
                 days: 'MM, <i>yyyy</i>',
                 months: 'yyyy',
@@ -185,8 +185,8 @@
             this.view = this.currentView;
 
             this.$el.on('clickCell.adp', this._onClickCell.bind(this));
-            this.$datepicker.on('mouseenter', '.datepicker--cell', this._onMouseEnterCell.bind(this));
-            this.$datepicker.on('mouseleave', '.datepicker--cell', this._onMouseLeaveCell.bind(this));
+            this.$datepicker.on('mouseenter', '.datepicker__cell', this._onMouseEnterCell.bind(this));
+            this.$datepicker.on('mouseleave', '.datepicker__cell', this._onMouseLeaveCell.bind(this));
 
             this.inited = true;
         },
@@ -281,8 +281,8 @@
             }
 
             this.$datepicker = $(baseTemplate).appendTo($appendTarget);
-            this.$content = $('.datepicker--content', this.$datepicker);
-            this.$nav = $('.datepicker--nav', this.$datepicker);
+            this.$content = $('.datepicker__content', this.$datepicker);
+            this.$nav = $('.datepicker__nav', this.$datepicker);
         },
 
         _triggerOnChange: function () {
@@ -745,9 +745,9 @@
             pos = pos.split(' ');
             var main = pos[0],
                 sec = pos[1],
-                classes = 'datepicker -' + main + '-' + sec + '- -from-' + main + '-';
+                classes = 'datepicker _' + main + '-' + sec + ' _from-' + main;
 
-            if (this.visible) classes += ' active';
+            if (this.visible) classes += ' _active';
 
             this.$datepicker
                 .removeAttr('class')
@@ -812,7 +812,7 @@
             var onShow = this.opts.onShow;
 
             this.setPosition(this.opts.position);
-            this.$datepicker.addClass('active');
+            this.$datepicker.addClass('_active');
             this.visible = true;
 
             if (onShow) {
@@ -824,7 +824,7 @@
             var onHide = this.opts.onHide;
 
             this.$datepicker
-                .removeClass('active')
+                .removeClass('_active')
                 .css({
                     left: '-100000px'
                 });
@@ -1055,7 +1055,7 @@
             type = type || this.cellType;
 
             var d = datepicker.getParsedDate(date),
-                selector = '.datepicker--cell[data-year="' + d.year + '"]',
+                selector = '.datepicker__cell[data-year="' + d.year + '"]',
                 $cell;
 
             switch (type) {
@@ -1177,7 +1177,7 @@
             // Enter
             if (code == 13) {
                 if (this.focused) {
-                    if (this._getCell(this.focused).hasClass('-disabled-')) return;
+                    if (this._getCell(this.focused).hasClass('_disabled')) return;
                     if (this.view != this.opts.minView) {
                         this.down()
                     } else {
@@ -1212,7 +1212,7 @@
         },
 
         _onMouseEnterCell: function (e) {
-            var $cell = $(e.target).closest('.datepicker--cell'),
+            var $cell = $(e.target).closest('.datepicker__cell'),
                 date = this._getDateFromCell($cell);
 
             // Prevent from unnecessary rendering and setting new currentDate
@@ -1222,7 +1222,7 @@
                 this.focused = ''
             }
 
-            $cell.addClass('-focus-');
+            $cell.addClass('_focus');
 
             this.focused = date;
             this.silent = false;
@@ -1239,9 +1239,9 @@
         },
 
         _onMouseLeaveCell: function (e) {
-            var $cell = $(e.target).closest('.datepicker--cell');
+            var $cell = $(e.target).closest('.datepicker__cell');
 
-            $cell.removeClass('-focus-');
+            $cell.removeClass('_focus');
 
             this.silent = true;
             this.focused = '';
@@ -1261,7 +1261,7 @@
             date.setHours(h);
             date.setMinutes(m);
 
-            if (!selected && !this._getCell(date).hasClass('-disabled-')) {
+            if (!selected && !this._getCell(date).hasClass('_disabled')) {
                 this.selectDate(date);
             } else {
                 this._setInputValue();
@@ -1284,7 +1284,7 @@
                 var $cell = this._getCell(this.focused);
 
                 if ($cell.length) {
-                    $cell.removeClass('-focus-')
+                    $cell.removeClass('_focus')
                 }
             }
             this._focused = val;
@@ -1413,6 +1413,8 @@
             if (data[match] || data[match] === 0) {
                 return data[match]
             }
+
+            return '';
         });
     };
 
