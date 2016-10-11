@@ -107,7 +107,9 @@
         },
         datepicker;
 
-    var Datepicker  = function (el, options) {
+    var Datepicker = function (el, options) {
+        var currDate = null;
+
         this.el = el;
         this.$el = $(el);
 
@@ -123,6 +125,7 @@
 
         if (this.el.nodeName == 'INPUT') {
             this.elIsInput = true;
+            currDate = this.parseDateString(this.$el.val());
         }
 
         if (this.opts.altField) {
@@ -133,7 +136,8 @@
         this.visible = false;
         this.silent = false; // Need to prevent unnecessary rendering
 
-        this.currentDate = this.opts.startDate;
+        this.currentDate = currDate || this.opts.startDate;
+        this.setCurrentDate = !!currDate;
         this.currentView = this.opts.view;
         this._createShortCuts();
         this.selectedDates = [];
@@ -196,6 +200,10 @@
             this.$datepicker.on('mouseleave', '.datepicker__cell', this._onMouseLeaveCell.bind(this));
 
             this.inited = true;
+
+            if (this.currentDate && this.setCurrentDate) {
+                this.selectDate(this.currentDate);
+            }
         },
 
         _createShortCuts: function () {
@@ -370,6 +378,50 @@
                     if (o.onChangeDecade) o.onChangeDecade(this.curDecade);
                     break;
             }
+        },
+
+        parseDateString: function (dateString) {
+            var format = this.opts.dateFormat.split(/[^@dDmMy]{1,}/),
+                dateParts = dateString.length > 0 ? dateString.split(/[^0-9]{1,}/) : [],
+                datePartsISO8601 = {
+                    day: '',
+                    month: '',
+                    year: ''
+                },
+                date,
+                dayIndex = this._getDateIndex(format, ['dd', 'd']),
+                monthIndex = this._getDateIndex(format, ['mm', 'm']),
+                yearIndex = this._getDateIndex(format, ['yy', 'yyyy']);
+
+            if (dayIndex !== -1 && dateParts.hasOwnProperty(dayIndex)) {
+                datePartsISO8601['day'] = String('00' + dateParts[dayIndex]).slice(-2);
+            }
+
+            if (monthIndex !== -1) {
+                datePartsISO8601['month'] = String('00' + dateParts[monthIndex]).slice(-2);
+            }
+
+            if (yearIndex !== -1) {
+                datePartsISO8601['year'] = dateParts[yearIndex];
+            }
+
+            date = new Date(datePartsISO8601['year'] + '-' + datePartsISO8601['month'] + '-' + datePartsISO8601['day']);
+
+            if (!(date instanceof Date) || isNaN(date.getTime())) {
+                return false;
+            }
+
+            return date;
+        },
+
+        _getDateIndex: function (format, possibleDateParts) {
+            for (var i in possibleDateParts) {
+                if (possibleDateParts.hasOwnProperty(i) && format.indexOf(possibleDateParts[i]) !== -1) {
+                    return format.indexOf(possibleDateParts[i]);
+                }
+            }
+
+            return -1;
         },
 
         formatDate: function (string, date) {
