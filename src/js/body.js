@@ -201,7 +201,9 @@
         _getMonthHtml: function (date) {
             var content = this._getCellContents(date, 'month');
 
-            return '<div class="' + content.classes + '" data-month="' + date.getMonth() + '">' + content.html + '</div>'
+            return '<div class="datepicker__month-name">' +
+                       '<div class="' + content.classes + '" data-month="' + date.getMonth() + '">' + content.html+ '</div>' +
+                   '</div>';
         },
 
         _getYearsHtml: function (date) {

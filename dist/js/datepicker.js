@@ -1,4 +1,11 @@
-;(function (window, $, undefined) { ;(function () {
+;(function (window, $, undefined) { 
+/**
+ * This fork of https://github.com/t1m0n/air-datepicker with changed markup, added few events and css classes
+ *
+ * @see http://t1m0n.name/air-datepicker/docs/
+ * @see https://github.com/Thereisnobugs/air-datepicker/tree/bem
+ */
+;(function () {
     var VERSION = '2.2.3',
         pluginName = 'datepicker',
         autoInitSelector = '.datepicker-here',
@@ -811,6 +818,7 @@
         show: function () {
             var onShow = this.opts.onShow;
 
+            this.$el.addClass('_open');
             this.setPosition(this.opts.position);
             this.$datepicker.addClass('_active');
             this.visible = true;
@@ -823,6 +831,7 @@
         hide: function () {
             var onHide = this.opts.onHide;
 
+            this.$el.removeClass('_open');
             this.$datepicker
                 .removeClass('_active')
                 .css({
@@ -1697,7 +1706,9 @@
         _getMonthHtml: function (date) {
             var content = this._getCellContents(date, 'month');
 
-            return '<div class="' + content.classes + '" data-month="' + date.getMonth() + '">' + content.html + '</div>'
+            return '<div class="datepicker__month-name">' +
+                       '<div class="' + content.classes + '" data-month="' + date.getMonth() + '">' + content.html+ '</div>' +
+                   '</div>';
         },
 
         _getYearsHtml: function (date) {
