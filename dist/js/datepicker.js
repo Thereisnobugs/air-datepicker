@@ -20,6 +20,7 @@
         defaults = {
             classes: '',
             inline: false,
+            target: false,
             language: 'ru',
             startDate: new Date(),
             firstDay: '',
@@ -286,13 +287,17 @@
                 $inline = $('<div class="datepicker-inline">');
 
             if(this.el.nodeName == 'INPUT') {
-                if (!this.opts.inline) {
+                if (this.opts.target == 'parent') {
+                    $appendTarget = this.$el.parent();
+                } else if (this.opts.target) {
+                    $appendTarget = $(this.opts.target);
+                } else if (!this.opts.inline) {
                     $appendTarget = $datepickersContainer;
                 } else {
-                    $appendTarget = $inline.insertAfter(this.$el)
+                    $appendTarget = $inline.insertAfter(this.$el);
                 }
             } else {
-                $appendTarget = $inline.appendTo(this.$el)
+                $appendTarget = $inline.appendTo(this.$el);
             }
 
             this.$datepicker = $(baseTemplate).appendTo($appendTarget);
@@ -826,37 +831,37 @@
 
             switch (main) {
                 case 'top':
-                    top = dims.top - selfDims.height - offset;
+                    top = (this.opts.target ? 0 : dims.top) - selfDims.height - offset;
                     break;
                 case 'right':
-                    left = dims.left + dims.width + offset;
+                    left = (this.opts.target ? 0 : dims.left) + dims.width + offset;
                     break;
                 case 'bottom':
-                    top = dims.top + dims.height + offset;
+                    top = (this.opts.target ? 0 : dims.top) + dims.height + offset;
                     break;
                 case 'left':
-                    left = dims.left - selfDims.width - offset;
+                    left = (this.opts.target ? 0 : dims.left) - selfDims.width - offset;
                     break;
             }
 
             switch(secondary) {
                 case 'top':
-                    top = dims.top;
+                    top = this.opts.target ? 0 : dims.top;
                     break;
                 case 'right':
-                    left = dims.left + dims.width - selfDims.width;
+                    left = (this.opts.target ? 0 : dims.left) + dims.width - selfDims.width;
                     break;
                 case 'bottom':
-                    top = dims.top + dims.height - selfDims.height;
+                    top = (this.opts.target ? 0 : dims.top) + dims.height - selfDims.height;
                     break;
                 case 'left':
-                    left = dims.left;
+                    left = this.opts.target ? 0 : dims.left;
                     break;
                 case 'center':
                     if (/left|right/.test(main)) {
-                        top = dims.top + dims.height/2 - selfDims.height/2;
+                        top = (this.opts.target ? 0 : dims.top) + dims.height/2 - selfDims.height/2;
                     } else {
-                        left = dims.left + dims.width/2 - selfDims.width/2;
+                        left = (this.opts.target ? 0 : dims.left) + dims.width/2 - selfDims.width/2;
                     }
             }
 
